@@ -39,11 +39,14 @@ class SarineExtendedImage extends Viewer
 
 
     canvas.attr({width : img.width, height :  img.height ,class : imgName})
-			canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
-			if _t.borderRadius then canvas.css({'border-radius' : _t.borderRadius})
-		ctx.drawImage(img, 0, 0, img.width, img.height)
-    div.appendChild(canvas)
-		_t.element.append(div)
+    canvas.css({width:'100%',height:'100%'})
+    canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
+    if _t.borderRadius then canvas.css({'border-radius' : _t.borderRadius})
+    ctx.drawImage(img, 0, 0, img.width, img.height)
+    div = $("<div>")
+    div.css({width : _t.atomSize.width, height :  _t.atomSize.height,margin:'0 auto' })
+    div.append(canvas)
+    _t.element.append(div)
 
 			defer.resolve(_t)
 			)
@@ -72,6 +75,7 @@ class SarineExtendedImage extends Viewer
 			divContainer.css 'text-align', 'center'
 
 		iframeElement = $('#iframe-inscription')
+
 		closeButton = $('#closeIframe')
 		if (inscriptionContainer.length == 0)
 			inscriptionContainer = $('<div id="iframe-inscription-container" class="slider-wrap">')
@@ -79,7 +83,7 @@ class SarineExtendedImage extends Viewer
 			if _t.inIframe() then gemPrintContainer.addClass('iframe-inscription-container-hide')
 			if($('.slider-wrap').length==0) then sliderHeight = sliderWrap.last().height() else sliderHeight = $('.slider-wrap').last().height()
 			inscriptionContainer.height(sliderHeight)
-			iframeElement = $('<img id="iframe-inscription"  ></img>')
+			iframeElement = $('<img id="iframe-inscription" style="width:100%;height:100%"></img>')
 			closeButton = $('<a id="closeInscription">&times;</a>')
 			if @addCss
 				closeButton.css 'font-size', '35px'
