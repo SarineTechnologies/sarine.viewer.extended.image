@@ -80,7 +80,7 @@ class SarineExtendedImage extends Viewer
 		if (inscriptionContainer.length == 0)
 			inscriptionContainer = $('<div id="iframe-inscription-container" class="slider-wrap">')
 			if Device.isMobileOrTablet() then inscriptionContainer.addClass('mobile')
-			if _t.inIframe() then gemPrintContainer.addClass('iframe-inscription-container-hide')
+			if _t.inIframe() then inscriptionContainer.addClass('iframe-inscription-container-hide')
 			if($('.slider-wrap').length==0) then sliderHeight = sliderWrap.last().height() else sliderHeight = $('.slider-wrap').last().height()
 			inscriptionContainer.height(sliderHeight)
 			iframeElement = $('<img id="iframe-inscription" style="width:100%;height:100%"></img>')
