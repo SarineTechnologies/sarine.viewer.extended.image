@@ -22,12 +22,12 @@ class SarineExtendedImage extends Viewer
   imgConfig = null
   if (configArray.length != 0)
     imgConfig = configArray[0]
-  fullSrc = window.stones[0].viewers.resources[@tableInscriptionImageName]
-  if !fullSrc
+  _t.fullSrc = window.stones[0].viewers.resources[@tableInscriptionImageName]
+  if !_t.fullSrc
     @failed()
     return defer.resolve(@)
 
-		@loadImage(fullSrc).then((img)->
+		@loadImage(_t.fullSrc).then((img)->
 			canvas = $("<canvas>")
 			ctx = canvas[0].getContext('2d')
 			if(img.src.indexOf('data:image') != -1)
@@ -41,12 +41,12 @@ class SarineExtendedImage extends Viewer
 
 
     canvas.attr({width : img.width, height :  img.height ,class : imgName})
-    canvas.css({width:'100%',height:'100%'})
+    canvas.css({width:'100%',height:'100%',cursor: 'pointer'})
     canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
     if _t.borderRadius then canvas.css({'border-radius' : _t.borderRadius})
     ctx.drawImage(img, 0, 0, img.width, img.height)
     div = $("<div>")
-    div.css({width : _t.atomSize.width, height :  _t.atomSize.height,margin:'0 auto' })
+    div.css({width : _t.atomSize.width, height :  _t.atomSize.height,margin:'0 auto'})
     div.append(canvas)
     _t.element.append(div)
 
