@@ -17,15 +17,17 @@ class SarineExtendedImage extends Viewer
 		else 
 			defer.notify(@id + " : start load first image1")
 
-		_t = @
-		configArray = window.configuration.experiences.filter((i)-> return i.atom == 'tableInscrtiption')
-		imgConfig = null
-		if (configArray.length != 0)
-			imgConfig = configArray[0]
+  _t = @
+  configArray = window.configuration.experiences.filter((i)-> return i.atom == 'tableInscrtiption')
+  imgConfig = null
+  if (configArray.length != 0)
+    imgConfig = configArray[0]
+  fullSrc = window.stones[0].viewers.resources[@tableInscriptionImageName]
+  if !fullSrc
+    @failed()
+    return defer.resolve(@)
 
-
-		@fullSrc =  window.stones[0].viewers.resources[@tableInscriptionImageName]
-		@loadImage(@fullSrc).then((img)->
+		@loadImage(fullSrc).then((img)->
 			canvas = $("<canvas>")
 			ctx = canvas[0].getContext('2d')
 			if(img.src.indexOf('data:image') != -1)
