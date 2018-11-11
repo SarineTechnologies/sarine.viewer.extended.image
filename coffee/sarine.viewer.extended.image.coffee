@@ -68,7 +68,7 @@ class SarineExtendedImage extends Viewer
 		_t = @
 		if($(".storyline").length > 0)then sliderWrap = $(".slider-wrap")
 		else
-			sliderWrap = $("body").find('div.dashboard')
+			sliderWrap = $("body").find('.slide--tableInscription')
 			@addCss = true
 		inscriptionContainer = $('#iframe-inscription-container')
 		divContainer = $('<div id="image-container" class="table-img-container">')
@@ -80,32 +80,35 @@ class SarineExtendedImage extends Viewer
 
 		closeButton = $('#closeIframe')
 		if (inscriptionContainer.length == 0)
-			inscriptionContainer = $('<div id="iframe-inscription-container" class="slider-wrap">')
-			if Device.isMobileOrTablet() then inscriptionContainer.addClass('mobile')
-			if _t.inIframe() then inscriptionContainer.addClass('iframe-inscription-container-hide')
-			if($('.slider-wrap').length==0) then sliderHeight = sliderWrap.last().height() else sliderHeight = $('.slider-wrap').last().height()
-			inscriptionContainer.height(sliderHeight)
-			iframeElement = $('<img id="iframe-inscription" style="width:100%;height:100%"></img>')
-			closeButton = $('<a id="closeInscription">&times;</a>')
-			if @addCss
-				closeButton.css 'font-size', '35px'
-				closeButton.css 'position', 'absolute'
-				closeButton.css 	'right', '15px'
+        inscriptionContainer = $('<div id="iframe-inscription-container" class="slider-wrap">')
+        if Device.isMobileOrTablet() then inscriptionContainer.addClass('mobile')
+        if _t.inIframe() then inscriptionContainer.addClass('iframe-inscription-container-hide')
+        if($('.slider-wrap').length==0) then sliderHeight = sliderWrap.last().height() else sliderHeight = $('.slider-wrap').last().height()
+        inscriptionContainer.height(sliderHeight)
 
-			inscriptionContainer.append closeButton
-			divContainer.append iframeElement
-			inscriptionContainer.append divContainer
-			sliderWrap.before inscriptionContainer
+        iframeElement = $('<img id="iframe-inscription" style="width:100%;height:100%"></img>')
+        closeButton = $('<a id="closeInscription">&times;</a>')
+        if @addCss
+          closeButton.css 'font-size', '35px'
+          closeButton.css 'position', 'absolute'
+          closeButton.css 	'right', '15px'
 
-		iframeElement.attr 'src', src
-		window.scrollTo(0,0)
+        inscriptionContainer.append closeButton
+        divContainer.append iframeElement
+        inscriptionContainer.append divContainer
 
-		sliderWrap.css 'display','none'
-		inscriptionContainer.css 'display', 'block'
-		closeButton.on 'click', (=>
-			sliderWrap.css 'display', 'block'
-			inscriptionContainer.css 'display', 'none'
-			return
+     if @addCss then sliderWrap.find('.content').before inscriptionContainer else sliderWrap.prepend inscriptionContainer
+     if @addCss then inscriptionContainer.parent().find('.content').css 'display','none'
+
+
+   iframeElement.attr 'src', src
+
+	 inscriptionContainer.css 'display', 'block'
+
+	 closeButton.on 'click', (=>
+       inscriptionContainer.css 'display', 'none'
+       inscriptionContainer.parent().find('.content').css 'display','block'
+			    return
 		)
 
 	inIframe :()->
