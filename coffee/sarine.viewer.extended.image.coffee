@@ -1,7 +1,7 @@
 
 class SarineExtendedImage extends Viewer
 	
-	constructor: (options) -> 			
+	constructor: (options) ->  			
 		super(options)		
 		{@imagesArr, @borderRadius,@tableInscriptionImageName,@atomSize} = options
 
