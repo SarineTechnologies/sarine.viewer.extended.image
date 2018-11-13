@@ -26,33 +26,33 @@ class SarineExtendedImage extends Viewer
     if !_t.fullSrc
       @failed( ->
         return defer.resolve(@))
-
-    @loadImage(_t.fullSrc).then((img)->
-      canvas = $("<canvas>")
-      ctx = canvas[0].getContext('2d')
-      if(img.src.indexOf('data:image') != -1)
-        @failed(->
-          return defer.resolve(@))
-      else
-        if(img.src.indexOf('?') != -1)
-          className = img.src.substr(0, img.src.indexOf('?'))
-          imgName = className.substr((className.lastIndexOf("/") + 1), className.lastIndexOf("/")).slice(0,-4)
+    else
+      @loadImage(_t.fullSrc).then((img)->
+        canvas = $("<canvas>")
+        ctx = canvas[0].getContext('2d')
+        if(img.src.indexOf('data:image') != -1)
+          @failed(->
+            return defer.resolve(@))
         else
-          imgName = img.src.substr((img.src.lastIndexOf("/") + 1), img.src.lastIndexOf("/")).slice(0,-4)
+          if(img.src.indexOf('?') != -1)
+            className = img.src.substr(0, img.src.indexOf('?'))
+            imgName = className.substr((className.lastIndexOf("/") + 1), className.lastIndexOf("/")).slice(0,-4)
+          else
+            imgName = img.src.substr((img.src.lastIndexOf("/") + 1), img.src.lastIndexOf("/")).slice(0,-4)
 
 
-        canvas.attr({width : img.width, height :  img.height ,class : imgName})
-        canvas.css({width:'100%',height:'100%',cursor: 'pointer'})
-        canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
-        if _t.borderRadius then canvas.css({'border-radius' : _t.borderRadius})
-        ctx.drawImage(img, 0, 0, img.width, img.height)
-        div = $("<div>")
-        div.css({width : _t.atomSize.width, height :  _t.atomSize.height,margin:'0 auto'})
-        div.append(canvas)
-        _t.element.append(div)
+          canvas.attr({width : img.width, height :  img.height ,class : imgName})
+          canvas.css({width:'100%',height:'100%',cursor: 'pointer'})
+          canvas.on 'click', (e) => _t.initPopup(_t.fullSrc )
+          if _t.borderRadius then canvas.css({'border-radius' : _t.borderRadius})
+          ctx.drawImage(img, 0, 0, img.width, img.height)
+          div = $("<div>")
+          div.css({width : _t.atomSize.width, height :  _t.atomSize.height,margin:'0 auto'})
+          div.append(canvas)
+          _t.element.append(div)
 
-      defer.resolve(_t)
-    )
+        defer.resolve(_t)
+      )
     defer
   failed : (cb) ->
     _t = @
