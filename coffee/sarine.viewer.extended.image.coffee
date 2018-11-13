@@ -1,7 +1,7 @@
 
 class SarineExtendedImage extends Viewer
 	
-	constructor: (options) ->  			
+	constructor: (options) ->
 		super(options)		
 		{@imagesArr, @borderRadius,@tableInscriptionImageName,@atomSize} = options
 
@@ -31,7 +31,8 @@ class SarineExtendedImage extends Viewer
 			canvas = $("<canvas>")
 			ctx = canvas[0].getContext('2d')
 			if(img.src.indexOf('data:image') != -1)
-				imgName = 'no_stone'
+        @failed()
+        return defer.resolve(@)
 			else
 				if(img.src.indexOf('?') != -1)
 					className = img.src.substr(0, img.src.indexOf('?'))
