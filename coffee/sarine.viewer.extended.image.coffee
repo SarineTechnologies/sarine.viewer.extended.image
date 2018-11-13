@@ -26,15 +26,18 @@ class SarineExtendedImage extends Viewer
     imgConfig = configArray[0]
   _t.fullSrc = window.stones[0].viewers.resources[@tableInscriptionImageName]
   if !_t.fullSrc
-    @failed()
-    return defer.resolve(@)
+    @failed(->
+      return defer.resolve(@)
+    )
+
 
 		@loadImage(_t.fullSrc).then((img)->
 			canvas = $("<canvas>")
 			ctx = canvas[0].getContext('2d')
 			if(img.src.indexOf('data:image') != -1)
-        @failed()
-        return defer.resolve(@)
+        @failed(->
+          return defer.resolve(@)
+        )
 			else
 				if(img.src.indexOf('?') != -1)
 					className = img.src.substr(0, img.src.indexOf('?'))
@@ -56,20 +59,15 @@ class SarineExtendedImage extends Viewer
 			defer.resolve(_t)
 			)
 		defer
-	failed : (callback) ->
-    _t = undefined
-    _t = this
-    _t.loadImage(_t.callbackPic).then(img) ->
-      canvas = undefined
-      canvas = $('<canvas>')
-      canvas.attr
-        'class': 'no_stone'
-        'width': img.width
-        'height': img.height
-      canvas[0].getContext('2d').drawImage img, 0, 0, img.width, img.height
-      _t.element.append canvas
-      callback()
-	full_init : ()-> 
+  failed : (cb) ->
+    _t = @
+    _t.loadImage(_t.callbackPic).then (img)->
+      canvas = $("<canvas>")
+      canvas.attr({"class": "no_stone" ,"width": img.width, "height": img.height})
+      canvas[0].getContext("2d").drawImage(img, 0, 0, img.width, img.height)
+      _t.element.append(canvas)
+      cb()
+  full_init : ()->
 		defer = $.Deferred()
 		defer.resolve(@)		
 		defer
