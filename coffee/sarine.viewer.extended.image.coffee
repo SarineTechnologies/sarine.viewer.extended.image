@@ -11,9 +11,9 @@ class SarineExtendedImage extends Viewer
 	first_init : ()->
 		defer = $.Deferred() 
 
-		if !@tableInscriptionImageName
+		if !@tableInscriptionImageName || !window.stones[0].viewers.resources[@tableInscriptionImageName]
 			@failed()
-			defer.resolve(@)
+			return defer.resolve(@)
 		else 
 			defer.notify(@id + " : start load first image1")
 
@@ -57,7 +57,7 @@ class SarineExtendedImage extends Viewer
 	failed : () ->
 		_t = @ 
 		_t.loadImage(_t.callbackPic).then (img)->
-			canvas = $("<canvas >")
+			canvas = $("<canvas>")
 			canvas.attr({"class": "no_stone" ,"width": img.width, "height": img.height}) 
 			canvas[0].getContext("2d").drawImage(img, 0, 0, img.width, img.height)
 			_t.element.append(canvas)	

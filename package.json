@@ -39,7 +39,7 @@
   {
     "node": "6.9.0"
   },
-  "version": "1.0.5",
+  "version": "1.0.51",
    "scripts": {
     "build": "grunt build",
     "dev": "grunt dev"
