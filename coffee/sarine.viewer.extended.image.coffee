@@ -24,8 +24,7 @@ class SarineExtendedImage extends Viewer
       imgConfig = configArray[0]
     _t.fullSrc = window.stones[0].viewers.resources[@tableInscriptionImageName]
     if !_t.fullSrc
-      @failed( ->
-        return defer.resolve(@))
+       return defer.resolve(@)
     else
       @loadImage(_t.fullSrc).then((img)->
         canvas = $("<canvas>")
