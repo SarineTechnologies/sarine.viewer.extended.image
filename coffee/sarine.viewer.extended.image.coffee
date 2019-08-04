@@ -107,8 +107,9 @@ class SarineExtendedImage extends Viewer
     inscriptionContainer.css 'display', 'block'
 
     closeButton.on 'click', (=>
-      inscriptionContainer.css 'display', 'none'
+      # inscriptionContainer.css 'display', 'none'
       inscriptionContainer.parent().find('.content').css 'display','block'
+      inscriptionContainer.remove()
       return
     )
 
